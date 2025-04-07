@@ -159,3 +159,27 @@ co2Monitor.connect((error) => {
         }
     });
 });
+
+// Handle process termination
+process.on('SIGINT', () => {
+    console.log('Received SIGINT. Cleaning up...');
+    cleanupAndExit();
+});
+
+process.on('SIGTERM', () => {
+    console.log('Received SIGTERM. Cleaning up...');
+    cleanupAndExit();
+});
+
+function cleanupAndExit() {
+    // Disconnect from MQTT
+    mqttClient.end(() => {
+        console.log('MQTT client disconnected');
+        
+        // Disconnect from CO2 monitor
+        co2Monitor.disconnect(() => {
+            console.log('CO2 monitor disconnected');
+            process.exit(0);
+        });
+    });
+}

@@ -71,6 +71,7 @@ mqttClient.on('connect', () => {
                 unit_of_measurement: 'ppm',
                 unique_id: `co2_${DEVICE_UUID}`,
                 device,
+                device_class: "carbon_dioxide",
             })
         },
         {
@@ -84,6 +85,7 @@ mqttClient.on('connect', () => {
                 unit_of_measurement: '°C',
                 unique_id: `temperature_${DEVICE_UUID}`,
                 device,
+                device_class: "temperature",
             })
         }
     ];
